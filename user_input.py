@@ -49,6 +49,9 @@ def user_input():
     if user_defined_regex == True:
         while True:
             regex = input("What regex would you like to use? ")
+            if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
+                print("Please encapsulate your regex in \"\".")
+                continue
             #TODO: code for regex
             break
     else:
