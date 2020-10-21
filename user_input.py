@@ -1,3 +1,5 @@
+import re
+
 def user_input():
     # Check if the user would like to crawl the IMDb Top 1000
     while True:
@@ -16,9 +18,13 @@ def user_input():
         url = "https://www.imdb.com/search/title/?count=100&groups=top_1000&sort=user_rating"
     else:
         while True: 
-            url = input("What URL would you like to crawl instad? ")
-            #TODO: regex for url
-            break
+            url = input("What URL would you like to crawl instad? ").lower()
+            if re.match("http(s)?:\/\/www.[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?", url):
+                break
+            else:
+                print("Invalid format, try again.")
+                print("Tips: URL must start with \"https://\" or \"http://\" and \"www.\" must be included.")
+                continue
 
     # Check how many levels the user would like to crawl
     while True:
