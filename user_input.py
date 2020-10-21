@@ -45,14 +45,13 @@ def user_input():
         else:
             print("You need to type either \"y\" for yes or \"n\" for no.")
     
-    # Check what the user-defines regex is
+    # Check what the user-defined regex is
     if user_defined_regex == True:
         while True:
             regex = input("What regex would you like to use? ")
             if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
                 print("Please encapsulate your regex in \"\".")
                 continue
-            #TODO: code for regex
             break
     else:
         regex = ""
