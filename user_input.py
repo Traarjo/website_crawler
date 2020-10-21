@@ -26,7 +26,7 @@ def user_input():
         try:
             levels = int(levels)
         except:
-            print("You have to type a number, it can not have any decimals.")
+            print("You have to type a number without decimals.")
             continue
         if levels > 0 and levels <= 100:
             break
