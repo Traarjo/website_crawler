@@ -24,8 +24,7 @@ def user_input():
             else:
                 print("Invalid format, try again.")
                 print("Tips: URL must start with \"https://\" or \"http://\" and \"www.\" must be included.")
-                continue
-
+                
     # Check how many levels the user would like to crawl
     while True:
         levels = input("How many levels would you like to crawl? ")
