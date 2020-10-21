@@ -19,7 +19,7 @@ def user_input():
     else:
         while True: 
             url = input("What URL would you like to crawl instad? ").lower()
-            if re.match("http(s)?:\/\/www.[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?", url):
+            if re.match("http(s)?://www.[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?", url):
                 break
             else:
                 print("Invalid format, try again.")
