@@ -11,7 +11,7 @@ def user_input():
         else:
             print("You need to type either \"y\" for yes or \"n\" for no.")
 
-    # Check what URL the user would like to crawl, if any
+    # Check what URL the user would like to crawl
     if imdb == True:
         url = "https://www.imdb.com/search/title/?count=100&groups=top_1000&sort=user_rating"
     else:
