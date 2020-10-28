@@ -31,21 +31,22 @@ def user_input():
 
     # Check if the user would like to define a regex
     define_regex = yes_no_question("Would you like to define a regex to find sensitive data? y/n: ")
+    regex = []
     
-    # Check what the user-defined regex is
+    # Check what the user-defined regex is, and if the user wants to define more than one.
     if define_regex == True:
+        regex.append(add_regex())
         while True:
-            regex = input("What regex would you like to use? ")
-            if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
-                print("Please encapsulate your regex in \"\".")
-                continue
-            break
-    else:
-        regex = ""
+            additional_regex = yes_no_question("Would you like to add an additional regex? y/n: ")
+            if additional_regex == True:
+                regex.append(add_regex())
+            else:
+                break
     
     #return variables
     return url, levels, regex
 
+    
 def yes_no_question(question: str) -> bool:
     while True:
         answer = input(question).lower()
@@ -58,3 +59,12 @@ def yes_no_question(question: str) -> bool:
         else:
             print("You need to type either \"y\" for yes or \"n\" for no.")
     return value
+
+def add_regex() -> str:
+    while True:
+            regex = input("What regex would you like to use? ")
+            if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
+                print("Please encapsulate your regex in \"\".")
+                continue
+            break
+    return regex
