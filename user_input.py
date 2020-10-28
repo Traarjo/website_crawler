@@ -55,9 +55,10 @@ def yes_no_question(question: str) -> bool:
 
 def add_regex() -> str:
     while True:
-            regex = input("What regex would you like to use? ")
-            if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
-                print("Please encapsulate your regex in \"\".")
-                continue
+        regex = input("What regex would you like to use? ")
+        if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
+            print("Please encapsulate your regex in \"\".")
+            continue
+        else:
             break
     return regex
