@@ -25,20 +25,20 @@ def user_input():
 
     # Check if the user would like to define a regex
     define_regex = yes_no_question("Would you like to define a regex to find sensitive data? y/n: ")
-    regex = []
+    user_defined_regex = []
     
     # Check what the user-defined regex is, and if the user wants to define more than one.
     if define_regex == True:
-        regex.append(add_regex())
+        user_defined_regex.append(add_regex())
         while True:
             additional_regex = yes_no_question("Would you like to add an additional regex? y/n: ")
             if additional_regex == True:
-                regex.append(add_regex())
+                user_defined_regex.append(add_regex())
             else:
                 break
     
     #return variables
-    return url, levels, regex
+    return url, levels, user_defined_regex
 
 def yes_no_question(question: str) -> bool:
     while True:
