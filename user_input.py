@@ -1,10 +1,13 @@
+from regex_patterns import Regex_patterns
 import re
 
 def user_input():
+    regex = Regex_patterns()
+
     # Check what URL the user would like to crawl
     while True: 
         url = input("What URL would you like to crawl? ").lower()
-        if re.match("http(s)?://www.[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?", url):
+        if re.match(regex.url, url):
             break
         else:
             print("Invalid format, try again.")
@@ -54,11 +57,5 @@ def yes_no_question(question: str) -> bool:
     return value
 
 def add_regex() -> str:
-    while True:
-        regex = input("What regex would you like to use? ")
-        if regex[0] != "\"" or regex[len(regex) - 1] != "\"" or len(regex) < 3:
-            print("Please encapsulate your regex in \"\".")
-            continue
-        else:
-            break
+    regex = str(input("What regex would you like to use? No surrounding \"\" needed. "))
     return regex
