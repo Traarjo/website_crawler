@@ -3,15 +3,15 @@ import re
 import time
 
 class Crawley:
-    def __init__(self):
-        pass
-
     def welcome(self):
         print("Initializing...")
         for i in range (3, 0, -1):
-            time.sleep(0.4)
+            time.sleep(0.3)
             print(str(i) + "...")
         print("Hello friend, I'm Crawley - Your personal web crawling assistant.")
+
+    def goodbye(self):
+        pass
 
     def user_input(self):
         regex = Regex_patterns()

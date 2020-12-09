@@ -8,3 +8,6 @@ url, levels, user_defined_regex = crawley.user_input()
 
 crawl = Crawl(url, levels, user_defined_regex)
 crawl.perform_crawl()
+crawl.save_to_pdf()
+
+crawley.goodbye()
