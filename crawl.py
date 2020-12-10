@@ -54,12 +54,12 @@ class Crawl:
 
     def download_site(self, url):
         try:
-            source_code = str(urllib.request.urlopen(url).read())
+            source_code = urllib.request.urlopen(url).read()
         except:
             source_code = ""
 
         try:
-            web_content = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser").get_text()
+            web_content = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
         except:
             web_content = ""
 
@@ -104,15 +104,17 @@ class Crawl:
                 if self.links[i] not in self.crawled_links:
                     # Download site and get content
                     source_code, web_content = self.download_site(self.links[i])
+                    # str(source_code)
+                    # web_content.get_text()
 
                     if source_code != "" or web_content != "":
                         # Find links for sub-sites
                         
                         # Find emails
-                        self.find_emails(web_content)
+                        self.find_emails(web_content.get_text())
                         
                         # Find phone numbers
-                        self.find_phone_numbers(web_content)
+                        self.find_phone_numbers(web_content.get_text())
                         
                         # Find comments from the source code
 
