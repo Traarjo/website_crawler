@@ -23,12 +23,10 @@ class Crawley:
         print("Goodbye!")
 
     def user_input(self):
-        regex = Regex_patterns()
-
         # Check what URL the user would like to crawl
         while True: 
             url = input("Please specify what URL you would like to crawl: ").lower()
-            if re.match(regex.url, url):
+            if re.match(Regex_patterns().url(), url):
                 break
             else:
                 print("Oops! Your formatting is invalid, try again.")

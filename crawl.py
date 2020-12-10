@@ -10,7 +10,7 @@ class Crawl:
         self.levels = levels
         self.user_defined_regex = user_defined_regex
 
-        self.domain = re.search(Regex_patterns().domain, self.url).group()
+        self.domain = re.search(Regex_patterns().domain(), self.url).group()
         self.date = date.today().strftime('%d.%m.%Y')
         self.count = 1
         self.links = [self.url]
@@ -71,13 +71,13 @@ class Crawl:
     #src
 
     def find_emails(self, web_content):
-        emails = re.findall(Regex_patterns().email, web_content)
+        emails = re.findall(Regex_patterns().email(), web_content)
         for i in range(len(emails)):
             if emails[i] not in self.emails:
                 self.emails.append(emails[i])
 
     def find_phone_numbers(self, web_content):
-        phone_numbers = re.findall(Regex_patterns().phone_number, web_content)
+        phone_numbers = re.findall(Regex_patterns().phone_number(), web_content)
         for i in range(len(phone_numbers)):
             if phone_numbers[i] not in self.phone_numbers:
                 self.phone_numbers.append(phone_numbers[i])
