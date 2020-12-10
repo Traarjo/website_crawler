@@ -15,22 +15,59 @@ class Crawl:
         self.count = 1
         self.links = [self.url]
         self.crawled_links = []
-        self.website_content = ""
+        self.emails = []
+        self.phone_numbers = []
+        self.comments = []
+        self.special_data = []
+        self.common_words = []
+
+    def test_variables(self):
+        print("url")
+        print(self.url)
+        print("levels")
+        print(self.levels)
+        print("user_defined_regex")
+        print(self.user_defined_regex)
+        print("domain")
+        print(self.domain)
+        print("date")
+        print(self.date)
+        print("count")
+        print(self.count)
+        print("links")
+        print(self.links)
+        print("crawled_linkjs")
+        print(self.crawled_links)
+        print("emails")
+        print(self.emails)
+        print("phone_numbers")
+        print(self.phone_numbers)
+        print("comments")
+        print(self.comments)
+        print("special_data")
+        print(self.special_data)
+        print("common_words")
+        print(self.common_words)
 
     def increase_count(self):
         self.count += 1
 
     def download_site(self, url):
-        content = str(urllib.request.urlopen(url).read())
-        self.website_content = content
+        try:
+            content = str(urllib.request.urlopen(url).read())
+        except:
+            content = ""
+
+        return content
     
     def find_links(self):
         pass
     #href
     #src
 
-    def find_emails(self):
-        pass
+    def find_emails(self, website_content):
+        emails = re.findall(Regex_patterns().email, website_content)
+        self.emails.extend(set(emails))
 
     def find_phone_numbers(self):
         pass
@@ -55,15 +92,28 @@ class Crawl:
         if self.count <= self.levels:      
             for i in range(len(self.links)):
                 if self.links[i] not in self.crawled_links:
-                    self.download_site(self.links[i])
-                    #download
-                    #get links
-                    #get email
-                    #get phone numbers
-                    #get comments
-                    #get special data
-                    #get common words
-                    self.crawled_links.append(self.links[i])
+                    # Download site and get content
+                    website_content = self.download_site(self.links[i])
 
-            self.increase_count()
+                    if website_content != "":
+                        # Get links for sub-sites
+                        
+                        # Get emails
+                        self.find_emails(website_content)
+                        
+                        # Get phone numbers
+                        
+                        # Get comments from the source code
+
+                        # Get special data
+                        
+                        # Get common words
+
+                        # Add link to crawled links
+                        self.crawled_links.append(self.links[i])
+                    else:
+                        print("Oops! This website can't be crawled.")
+                        return
+
+            self.increase_count() #TODO: må sjekke om denne hopper før alle linker er sjekket
             self.perform_crawl()

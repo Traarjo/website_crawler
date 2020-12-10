@@ -10,6 +10,9 @@ class Crawley:
             print(str(i) + "...")
         print("Hello friend, I'm Crawley - Your personal web crawling assistant.")
 
+    def crawl_another(self):
+        pass
+    
     def goodbye(self):
         pass
 
@@ -69,5 +72,5 @@ class Crawley:
         return value
 
     def add_regex(self) -> str:
-        regex = str(input("What regex would you like to use? You don't have to encapsualte it in \"\". "))
+        regex = str(input("What regex would you like to use? You don't have to encapsualte it in \"\", I'll take care of that for you! "))
         return regex
