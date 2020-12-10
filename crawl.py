@@ -67,10 +67,15 @@ class Crawl:
 
     def find_emails(self, website_content):
         emails = re.findall(Regex_patterns().email, website_content)
-        self.emails.extend(set(emails))
+        for i in range(len(emails)):
+            if emails[i] not in self.emails:
+                self.emails.append(emails[i])
 
-    def find_phone_numbers(self):
-        pass
+    def find_phone_numbers(self, website_content):
+        phone_numbers = re.findall(Regex_patterns().phone_number, website_content)
+        for i in range(len(phone_numbers)):
+            if phone_numbers[i] not in self.phone_numbers:
+                self.phone_numbers.append(phone_numbers[i])
 
     def find_comments(self):
         pass
@@ -96,18 +101,19 @@ class Crawl:
                     website_content = self.download_site(self.links[i])
 
                     if website_content != "":
-                        # Get links for sub-sites
+                        # Find links for sub-sites
                         
-                        # Get emails
+                        # Find emails
                         self.find_emails(website_content)
                         
-                        # Get phone numbers
+                        # Find phone numbers
+                        self.find_phone_numbers(website_content)
                         
-                        # Get comments from the source code
+                        # Find comments from the source code
 
-                        # Get special data
+                        # Find special data
                         
-                        # Get common words
+                        # Find common words
 
                         # Add link to crawled links
                         self.crawled_links.append(self.links[i])
