@@ -5,4 +5,4 @@ class Regex_patterns:
         self.url = "(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?"
         self.domain = "(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+"
         self.email = "[a-zA-Z0-9.\-_]+@[0-9a-zA-Z]+[0-9a-zA-Z.\-]+"
-        self.phone_number = ""
+        self.phone_number = "[+(\d]{1}[\d+() ]{4,12}[\d]{1}"

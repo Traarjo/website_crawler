@@ -36,7 +36,7 @@ class Crawl:
         print(self.count)
         print("links")
         print(self.links)
-        print("crawled_linkjs")
+        print("crawled_links")
         print(self.crawled_links)
         print("emails")
         print(self.emails)
@@ -54,25 +54,30 @@ class Crawl:
 
     def download_site(self, url):
         try:
-            content = str(urllib.request.urlopen(url).read())
+            source_code = str(urllib.request.urlopen(url).read())
         except:
-            content = ""
+            source_code = ""
 
-        return content
+        try:
+            web_content = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser").get_text()
+        except:
+            web_content = ""
+
+        return source_code, web_content
     
     def find_links(self):
         pass
     #href
     #src
 
-    def find_emails(self, website_content):
-        emails = re.findall(Regex_patterns().email, website_content)
+    def find_emails(self, web_content):
+        emails = re.findall(Regex_patterns().email, web_content)
         for i in range(len(emails)):
             if emails[i] not in self.emails:
                 self.emails.append(emails[i])
 
-    def find_phone_numbers(self, website_content):
-        phone_numbers = re.findall(Regex_patterns().phone_number, website_content)
+    def find_phone_numbers(self, web_content):
+        phone_numbers = re.findall(Regex_patterns().phone_number, web_content)
         for i in range(len(phone_numbers)):
             if phone_numbers[i] not in self.phone_numbers:
                 self.phone_numbers.append(phone_numbers[i])
@@ -98,16 +103,16 @@ class Crawl:
             for i in range(len(self.links)):
                 if self.links[i] not in self.crawled_links:
                     # Download site and get content
-                    website_content = self.download_site(self.links[i])
+                    source_code, web_content = self.download_site(self.links[i])
 
-                    if website_content != "":
+                    if source_code != "" or web_content != "":
                         # Find links for sub-sites
                         
                         # Find emails
-                        self.find_emails(website_content)
+                        self.find_emails(web_content)
                         
                         # Find phone numbers
-                        self.find_phone_numbers(website_content)
+                        self.find_phone_numbers(web_content)
                         
                         # Find comments from the source code
 
