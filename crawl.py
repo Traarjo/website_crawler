@@ -112,7 +112,7 @@ class Crawl:
                         # Add link to crawled links
                         self.crawled_links.append(self.links[i])
                     else:
-                        print("Oops! This website can't be crawled.")
+                        print("Oops! That website can't be crawled.")
                         return
 
             self.increase_count() #TODO: må sjekke om denne hopper før alle linker er sjekket

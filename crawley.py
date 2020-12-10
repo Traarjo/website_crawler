@@ -11,10 +11,16 @@ class Crawley:
         print("Hello friend, I'm Crawley - Your personal web crawling assistant.")
 
     def crawl_another(self):
-        pass
-    
+        crawl_another = self.yes_no_question("Would you like to crawl another url? y/n: ")
+        return crawl_another 
+
     def goodbye(self):
-        pass
+        print("Ok, if that's all for now, then I bid you adieu!")
+        print("Disconnecting in...")
+        for i in range (3, 0, -1):
+            time.sleep(0.3)
+            print(str(i) + "...")
+        print("Goodbye!")
 
     def user_input(self):
         regex = Regex_patterns()
@@ -25,7 +31,7 @@ class Crawley:
             if re.match(regex.url, url):
                 break
             else:
-                print("Oops! Your formatting is invalid, try again!")
+                print("Oops! Your formatting is invalid, try again.")
                    
         # Check how many levels the user would like to crawl
         while True:
