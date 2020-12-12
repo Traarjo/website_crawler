@@ -99,7 +99,14 @@ class Crawl:
 
         file.close()
 
-    def find_special_data(self):
+    def find_special_data(self, web_content):
+        # data = []
+
+        # for i in range(len(self.user_defined_regex)):
+        #     special_data = re.findall(self.user_defined_regex[i], web_content)
+        #     for j in range(len(special_data)):
+        #         data.append(special_data[j])
+        #     self.special_data.append([self.user_defined_regex[i], data])
         pass
 
     def find_most_common_words(self):
@@ -133,6 +140,7 @@ class Crawl:
                         self.find_comments(web_content)
 
                         # Find special data
+                        self.find_special_data(web_content.get_text())
                         
                         # Find common words
 
