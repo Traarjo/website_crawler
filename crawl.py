@@ -91,8 +91,11 @@ class Crawl:
 
         with open("temporary_file.txt") as file:
             for num, line in enumerate(file, 1):
-                if re.search(Regex_patterns().comment(), line):
-                    self.comments.append([num, re.search(Regex_patterns().comment(), line).group()])
+                if re.search(Regex_patterns().html_comment(), line):
+                    self.comments.append([num, re.search(Regex_patterns().html_comment(), line).group()])
+                
+                if re.search(Regex_patterns().js_comment(), line):
+                    self.comments.append([num, re.search(Regex_patterns().js_comment(), line).group()])
 
         file.close()
 

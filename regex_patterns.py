@@ -13,5 +13,8 @@ class Regex_patterns:
     def phone_number(self):
         return "[+(\d]{1}[\d+() ]{4,12}[\d]{1}"
 
-    def comment(self):
+    def html_comment(self):
         return "<!--[ -~]*-->"
+
+    def js_comment(self):
+        return "\/\/[ -~]{0, 30}"
