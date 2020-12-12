@@ -86,7 +86,7 @@ class Crawl:
             if phone_numbers[i] not in self.phone_numbers:
                 self.phone_numbers.append(phone_numbers[i])
 
-    def find_comments(self, web_content):
+    def find_comments(self, link, web_content):
         file = open("temporary_file.txt", "w")
         file.write(str(web_content))
         file.close()
@@ -94,10 +94,10 @@ class Crawl:
         with open("temporary_file.txt") as file:
             for num, line in enumerate(file, 1):
                 if re.search(Regex_patterns().html_comment(), line):
-                    self.comments.append([num, re.search(Regex_patterns().html_comment(), line).group()])
+                    self.comments.append([link, num, re.search(Regex_patterns().html_comment(), line).group()])
                 
                 if re.search(Regex_patterns().js_comment(), line):
-                    self.comments.append([num, re.search(Regex_patterns().js_comment(), line).group()])
+                    self.comments.append([link, num, re.search(Regex_patterns().js_comment(), line).group()])
 
         file.close()
 
@@ -115,24 +115,65 @@ class Crawl:
         pass
 
     def save_to_pdf(self):
-        pdf = canvas.Canvas("./reports/{self.domain}_{self.date}.pdf", pagesize=A4)
+        path = f"./reports/{re.search(Regex_patterns().pure_domain(), self.domain).group()}_{self.date}.pdf"
+        pdf = canvas.Canvas(path, pagesize=A4)
         text = pdf.beginText()
 
         width, height = A4
         text.setTextOrigin(50, height - 50)
 
-        text.textline("URL: ", self.url)
-        text.textline("Date: ", self.date)
-        text.textline("Crawled levels: ", self.levels)
+        text.textLine("URL: " + self.url)
+        text.textLine("Date: " + self.date)
+        text.textLine("Crawled levels: " + str(self.levels))
 
         regexes = ""
         if self.user_defined_regex != []:
             for regex in self.user_defined_regex:
-                regexes += "{regex}, "
-            text.textline("User defines regex:", regexes)
+                regexes += (regex + ", ")
+            text.textLine("User-defined regexes: " + regexes)
+        else:
+            text.textLine("No user-defined regexes.")
+        
+        text.textLine("")
+        if self.crawled_links != []:
+            text.textLine("Crawled links:")
+            for link in self.crawled_links:
+                text.textLine(link)
+        else:
+            text.textLine("No crawled links.")
 
-        # for i in range (0, maxLines):
-        #     text.textLine(data[i])
+        text.textLine("")
+        if self.emails != []:
+            text.textLine("Emails:")
+            for email in self.emails:
+                text.textLine(email)
+        else:
+            text.textLine("No emails found.")
+
+        text.textLine("")
+        if self.phone_numbers != []:
+            text.textLine("Phone numbers:")
+            for phone_number in self.phone_numbers:
+                text.textLine(phone_number)
+        else:
+            text.textLine("No phone numbers found.")
+
+        text.textLine("")
+        if self.comments != []:
+            text.textLine("Comments:")
+            for comment in self.comments:
+                text.textLine(comment[0] + " on line " + str(comment[1]) + ":")
+                text.textLine(comment[2])
+                text.textLine("")
+        else:
+            text.textLine("No comments found.")
+
+
+        text.textLine("")
+        # special data
+
+        text.textLine("")
+        # common words
 
         pdf.drawText(text)
         pdf.setTitle("Web Crawl Report")
@@ -148,19 +189,19 @@ class Crawl:
 
                     if web_content != "":
                         # Find links for sub-sites
-                        self.find_links(web_content)
+                        #self.find_links(web_content)
                         
                         # Find emails
-                        self.find_emails(web_content.get_text())
+                        #self.find_emails(web_content.get_text())
                         
                         # Find phone numbers
-                        self.find_phone_numbers(web_content.get_text())
+                        #self.find_phone_numbers(web_content.get_text())
                         
                         # Find comments from the source code
-                        self.find_comments(web_content)
+                        #self.find_comments(self.links_to_crawl[i], web_content)
 
                         # Find special data
-                        self.find_special_data(web_content.get_text())
+                        #self.find_special_data(web_content.get_text())
                         
                         # Find common words
 

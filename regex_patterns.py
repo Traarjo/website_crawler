@@ -7,6 +7,9 @@ class Regex_patterns:
     def domain(self):
         return "(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+"
 
+    def pure_domain(self):
+        return "(?<=\/\/)[a-z0-9-]+.[a-z]+"
+
     def email(self):
         return "[a-zA-Z0-9.\-_]+@[0-9a-zA-Z]+[0-9a-zA-Z.\-]+"
     
