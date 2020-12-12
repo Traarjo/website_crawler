@@ -84,8 +84,17 @@ class Crawl:
             if phone_numbers[i] not in self.phone_numbers:
                 self.phone_numbers.append(phone_numbers[i])
 
-    def find_comments(self):
-        pass
+    def find_comments(self, web_content):
+        file = open("temporary_file.txt", "w")
+        file.write(str(web_content))
+        file.close()
+
+        with open("temporary_file.txt") as file:
+            for num, line in enumerate(file, 1):
+                if re.search(Regex_patterns().comment(), line):
+                    self.comments.append([num, re.search(Regex_patterns().comment(), line).group()])
+
+        file.close()
 
     def find_special_data(self):
         pass
@@ -118,6 +127,7 @@ class Crawl:
                         self.find_phone_numbers(web_content.get_text())
                         
                         # Find comments from the source code
+                        self.find_comments(web_content)
 
                         # Find special data
                         

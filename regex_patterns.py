@@ -12,3 +12,6 @@ class Regex_patterns:
     
     def phone_number(self):
         return "[+(\d]{1}[\d+() ]{4,12}[\d]{1}"
+
+    def comment(self):
+        return "<!--[ -~]*-->"
