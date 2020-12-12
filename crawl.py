@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from datetime import date
 import urllib.request
 import re
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
 
 class Crawl:
     def __init__(self, url : str, levels : int, user_defined_regex : list):
@@ -113,11 +115,29 @@ class Crawl:
         pass
 
     def save_to_pdf(self):
-        pass
+        pdf = canvas.Canvas("./reports/{self.domain}_{self.date}.pdf", pagesize=A4)
+        text = pdf.beginText()
 
-    def save_site(self):
-        pass
-        # Save site to textfile in domain/date/file
+        width, height = A4
+        text.setTextOrigin(50, height - 50)
+
+        text.textline("URL: ", self.url)
+        text.textline("Date: ", self.date)
+        text.textline("Crawled levels: ", self.levels)
+
+        regexes = ""
+        if self.user_defined_regex != []:
+            for regex in self.user_defined_regex:
+                regexes += "{regex}, "
+            text.textline("User defines regex:", regexes)
+
+        # for i in range (0, maxLines):
+        #     text.textLine(data[i])
+
+        pdf.drawText(text)
+        pdf.setTitle("Web Crawl Report")
+        pdf.save()
+
 
     def perform_crawl(self):
         if self.count <= self.levels:      
