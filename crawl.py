@@ -11,7 +11,7 @@ class Crawl:
         self.user_defined_regex = user_defined_regex
 
         self.domain = re.search(Regex_patterns().domain(), self.url).group()
-        self.date = date.today().strftime('%d.%m.%Y')
+        self.date = date.today().strftime("%d.%m.%Y")
         self.count = 1
         self.links = [self.url]
         self.crawled_links = []
@@ -54,21 +54,23 @@ class Crawl:
 
     def download_site(self, url):
         try:
-            source_code = urllib.request.urlopen(url).read()
-        except:
-            source_code = ""
-
-        try:
             web_content = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
         except:
             web_content = ""
 
-        return source_code, web_content
+        return web_content
     
-    def find_links(self):
-        pass
-    #href
-    #src
+    def find_links(self, web_content):
+        link = ""
+
+        for i in web_content.find_all("a", href=True):
+            if re.match(Regex_patterns().url(), i["href"]):
+                link = i["href"]
+            elif i["href"].startswith("/"):
+                link = self.domain + i["href"]
+
+            if link != "" and link not in self.links:
+                self.links.append(link)
 
     def find_emails(self, web_content):
         emails = re.findall(Regex_patterns().email(), web_content)
@@ -103,12 +105,11 @@ class Crawl:
             for i in range(len(self.links)):
                 if self.links[i] not in self.crawled_links:
                     # Download site and get content
-                    source_code, web_content = self.download_site(self.links[i])
-                    # str(source_code)
-                    # web_content.get_text()
+                    web_content = self.download_site(self.links[i])
 
-                    if source_code != "" or web_content != "":
+                    if web_content != "":
                         # Find links for sub-sites
+                        self.find_links(web_content)
                         
                         # Find emails
                         self.find_emails(web_content.get_text())
