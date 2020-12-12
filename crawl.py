@@ -13,7 +13,7 @@ class Crawl:
         self.domain = re.search(Regex_patterns().domain(), self.url).group()
         self.date = date.today().strftime("%d.%m.%Y")
         self.count = 1
-        self.links = [self.url]
+        self.links_to_crawl = [self.url]
         self.crawled_links = []
         self.emails = []
         self.phone_numbers = []
@@ -35,7 +35,7 @@ class Crawl:
         print("count")
         print(self.count)
         print("links")
-        print(self.links)
+        print(self.links_to_crawl)
         print("crawled_links")
         print(self.crawled_links)
         print("emails")
@@ -69,8 +69,8 @@ class Crawl:
             elif i["href"].startswith("/"):
                 link = self.domain + i["href"]
 
-            if link != "" and link not in self.links:
-                self.links.append(link)
+            if link != "" and link not in self.links_to_crawl:
+                self.links_to_crawl.append(link)
 
     def find_emails(self, web_content):
         emails = re.findall(Regex_patterns().email(), web_content)
@@ -102,10 +102,10 @@ class Crawl:
 
     def perform_crawl(self):
         if self.count <= self.levels:      
-            for i in range(len(self.links)):
-                if self.links[i] not in self.crawled_links:
+            for i in range(len(self.links_to_crawl)):
+                if self.links_to_crawl[i] not in self.crawled_links:
                     # Download site and get content
-                    web_content = self.download_site(self.links[i])
+                    web_content = self.download_site(self.links_to_crawl[i])
 
                     if web_content != "":
                         # Find links for sub-sites
@@ -124,10 +124,11 @@ class Crawl:
                         # Find common words
 
                         # Add link to crawled links
-                        self.crawled_links.append(self.links[i])
+                        self.crawled_links.append(self.links_to_crawl[i])
                     else:
                         print("Oops! That website can't be crawled.")
                         return
 
+            #for i in range(len(self.li))            
             self.increase_count() #TODO: må sjekke om denne hopper før alle linker er sjekket
             self.perform_crawl()
