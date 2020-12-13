@@ -99,10 +99,10 @@ class Crawl:
 
         file.close()
 
-    def find_special_data(self, web_content):
+    def find_special_data(self, link, web_content):
         for regex in self.user_defined_regex:
             special_data = re.findall(regex, web_content)
-            self.special_data.append([regex, set(special_data)])
+            self.special_data.append([link, regex, set(special_data)])
 
     def find_most_common_words(self, web_content):
         # cleaned_text = ""
@@ -175,9 +175,11 @@ class Crawl:
             text += "Special data:" + "\n"
             for special_data in self.special_data:
                 text += "\n"
-                text += special_data[0] + ":" + "\n"
-                for data in special_data[1]:
-                    text += data + "\n"
+                text += special_data[0] + " with regex \"" + special_data[1] + "\":" + "\n"
+                if special_data[2] != set():
+                    for data in special_data[2]:
+                        text += data + "\n"
+                else: text += "Oops! No special data found." + "\n"
         else:
             text += "Oops! No special data found." + "\n"
 
@@ -208,7 +210,7 @@ class Crawl:
                         self.find_comments(self.links_to_crawl[i], web_content)
 
                         # Find special data
-                        self.find_special_data(web_content.get_text())
+                        self.find_special_data(self.links_to_crawl[i], web_content.get_text())
                         
                         # Find common words
                         self.find_most_common_words(web_content.get_text())
@@ -216,8 +218,8 @@ class Crawl:
                         # Add link to crawled links
                         self.crawled_links.append(self.links_to_crawl[i])
                     else:
-                        print("Oops! That website can't be crawled.")
-                        return
+                        print("Oops! " + self.links_to_crawl[i] + " can't be crawled.")
+                        continue
 
             #for i in range(len(self.li))            
             self.increase_count() #TODO: må sjekke om denne hopper før alle linker er sjekket

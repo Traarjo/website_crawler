@@ -17,7 +17,7 @@ while True:
         crawl = Crawl(url, levels, user_defined_regex)
 
         crawl.perform_crawl()
-        #crawl.test_variables()
+        crawl.test_variables()
         crawl.save_report()
     else:
         crawley.goodbye()
