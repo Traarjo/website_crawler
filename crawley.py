@@ -14,6 +14,10 @@ class Crawley:
         crawl_another = self.yes_no_question("Would you like to crawl another url? y/n: ")
         return crawl_another 
 
+    def report(self):
+        print("I have created a report that contains your crawled data, ")
+        print("It can be found in the \"reports\"-folder.")
+
     def goodbye(self):
         print("Ok, if that's all for now, then I bid you adieu!")
         print("Disconnecting in...")
