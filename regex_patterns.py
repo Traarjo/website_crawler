@@ -23,7 +23,7 @@ class Regex_patterns:
         return r"<!--[ -~]*-->"
 
     def js_comment(self):
-        return r"\/\/[ -~]{0, 30}"
+        return r"\/\/[ -~]*"
 
     def word(self):
         return r"[^a-zA-Z ]+"
