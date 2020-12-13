@@ -19,35 +19,35 @@ class Crawl:
         self.phone_numbers = []
         self.comments = []
         self.special_data = []
-        self.common_words = {}
+        self.words = {}
 
-    def test_variables(self):
-        print("url")
-        print(self.url)
-        print("levels")
-        print(self.levels)
-        print("user_defined_regex")
-        print(self.user_defined_regex)
-        print("domain")
-        print(self.domain)
-        print("date")
-        print(self.date)
-        print("count")
-        print(self.count)
-        print("links")
-        print(self.links_to_crawl)
-        print("crawled_links")
-        print(self.crawled_links)
-        print("emails")
-        print(self.emails)
-        print("phone_numbers")
-        print(self.phone_numbers)
-        print("comments")
-        print(self.comments)
-        print("special_data")
-        print(self.special_data)
-        print("common_words")
-        print(self.common_words)
+    # def test_variables(self):
+    #     print("url")
+    #     print(self.url)
+    #     print("levels")
+    #     print(self.levels)
+    #     print("user_defined_regex")
+    #     print(self.user_defined_regex)
+    #     print("domain")
+    #     print(self.domain)
+    #     print("date")
+    #     print(self.date)
+    #     print("count")
+    #     print(self.count)
+    #     print("links")
+    #     print(self.links_to_crawl)
+    #     print("crawled_links")
+    #     print(self.crawled_links)
+    #     print("emails")
+    #     print(self.emails)
+    #     print("phone_numbers")
+    #     print(self.phone_numbers)
+    #     print("comments")
+    #     print(self.comments)
+    #     print("special_data")
+    #     print(self.special_data)
+    #     print("common_words")
+    #     print(self.words)
 
     def increase_count(self):
         self.count += 1
@@ -104,22 +104,25 @@ class Crawl:
             special_data = re.findall(regex, web_content)
             self.special_data.append([link, regex, set(special_data)])
 
-    def find_most_common_words(self, web_content):
-        # cleaned_text = ""
-        # for char in web_content:
-        #     cleaned_text += re.sub(Regex_patterns().word(), "", char)
+    def find_words(self, web_content):
+        cleaned_text = ""
+        for char in web_content:
+            cleaned_text += re.sub(Regex_patterns().word(), "", char)
             
 
-        # words = cleaned_text.split()
-        # for word in words:
-        #     if word in self.common_words:
-        #         self.common_words[word] += 1
-        #     else:
-        #         self.common_words.update({word: 1}) 
-        pass     
+        words = cleaned_text.split()
+        for word in words:
+            if word in self.words:
+                self.words[word] += 1
+            else:
+                self.words.update({word: 1}) 
+        pass
 
     def save_report(self):
-        path = f"./reports/{re.search(Regex_patterns().pure_domain(), self.domain).group()}_{self.date}.txt"
+        if re.search(Regex_patterns().http(), self.domain):
+            path = f"./reports/{re.search(Regex_patterns().pure_domain(), self.domain).group()}_{self.date}.txt"
+        else:
+            path = f"./reports/{self.domain}_{self.date}.txt"
         file = open(path, "w")
         text = ""
 
@@ -171,8 +174,8 @@ class Crawl:
 
 
         text += "\n"
+        text += "Special data:" + "\n"
         if self.special_data != []:
-            text += "Special data:" + "\n"
             for special_data in self.special_data:
                 text += "\n"
                 text += special_data[0] + " with regex \"" + special_data[1] + "\":" + "\n"
@@ -184,7 +187,11 @@ class Crawl:
             text += "Oops! No special data found." + "\n"
 
         text += "\n"
-        # common words
+        text += "Most common words:" + "\n"
+        self.words = sorted(self.words.items(), reverse=True, key=lambda x: x[1]) 
+        for element in self.words:
+            if element[1] >= 10:
+                text += element[0] + ": " + str(element[1]) + "\n"
 
         file.write(text)
         file.close()
@@ -213,14 +220,13 @@ class Crawl:
                         self.find_special_data(self.links_to_crawl[i], web_content.get_text())
                         
                         # Find common words
-                        self.find_most_common_words(web_content.get_text())
+                        self.find_words(web_content.get_text())
 
                         # Add link to crawled links
                         self.crawled_links.append(self.links_to_crawl[i])
                     else:
                         print("Oops! " + self.links_to_crawl[i] + " can't be crawled.")
                         continue
-
-            #for i in range(len(self.li))            
-            self.increase_count() #TODO: må sjekke om denne hopper før alle linker er sjekket
+          
+            self.increase_count()
             self.perform_crawl()
