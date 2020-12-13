@@ -19,7 +19,7 @@ class Crawl:
         self.phone_numbers = []
         self.comments = []
         self.special_data = []
-        self.common_words = []
+        self.common_words = {}
 
     def test_variables(self):
         print("url")
@@ -104,8 +104,19 @@ class Crawl:
             special_data = re.findall(regex, web_content)
             self.special_data.append([regex, set(special_data)])
 
-    def find_most_common_words(self):
-        pass
+    def find_most_common_words(self, web_content):
+        # cleaned_text = ""
+        # for char in web_content:
+        #     cleaned_text += re.sub(Regex_patterns().word(), "", char)
+            
+
+        # words = cleaned_text.split()
+        # for word in words:
+        #     if word in self.common_words:
+        #         self.common_words[word] += 1
+        #     else:
+        #         self.common_words.update({word: 1}) 
+        pass     
 
     def save_report(self):
         path = f"./reports/{re.search(Regex_patterns().pure_domain(), self.domain).group()}_{self.date}.txt"
@@ -168,14 +179,13 @@ class Crawl:
                 for data in special_data[1]:
                     text += data + "\n"
         else:
-            text += "Oops! No special data found."
+            text += "Oops! No special data found." + "\n"
 
         text += "\n"
         # common words
 
         file.write(text)
         file.close()
-
 
     def perform_crawl(self):
         if self.count <= self.levels:      
@@ -201,6 +211,7 @@ class Crawl:
                         self.find_special_data(web_content.get_text())
                         
                         # Find common words
+                        self.find_most_common_words(web_content.get_text())
 
                         # Add link to crawled links
                         self.crawled_links.append(self.links_to_crawl[i])

@@ -5,18 +5,19 @@ from crawley import Crawley
 crawley = Crawley()
 crawley.welcome() 
 url, levels, user_defined_regex = crawley.user_input()
-
 crawl = Crawl(url, levels, user_defined_regex)
+
 crawl.perform_crawl()
-#crawl.test_variables()
+crawl.test_variables()
 crawl.save_report()
 
 while True:
     if crawley.crawl_another() == True:
         url, levels, user_defined_regex = crawley.user_input()
         crawl = Crawl(url, levels, user_defined_regex)
+
         crawl.perform_crawl()
-        crawl.test_variables()
+        #crawl.test_variables()
         crawl.save_report()
     else:
         crawley.goodbye()

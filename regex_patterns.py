@@ -2,22 +2,25 @@ import re
 
 class Regex_patterns:
     def url(self):
-        return "(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?"
+        return r"(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+([a-z0-9/.:=?_&#]+)?"
     
     def domain(self):
-        return "(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+"
+        return r"(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+"
 
     def pure_domain(self):
-        return "(?<=\/\/)[a-z0-9-]+.[a-z]+"
+        return r"(?<=\/\/)[a-z0-9-]+.[a-z]+"
 
     def email(self):
-        return "[a-zA-Z0-9.\-_]+@[0-9a-zA-Z]+[0-9a-zA-Z.\-]+"
+        return r"[a-zA-Z0-9.\-_]+@[0-9a-zA-Z]+[0-9a-zA-Z.\-]+"
     
     def phone_number(self):
-        return "[+(\d]{1}[\d+() ]{4,12}[\d]{1}"
+        return r"[+(\d]{1}[\d+() ]{4,12}[\d]{1}"
 
     def html_comment(self):
-        return "<!--[ -~]*-->"
+        return r"<!--[ -~]*-->"
 
     def js_comment(self):
-        return "\/\/[ -~]{0, 30}"
+        return r"\/\/[ -~]{0, 30}"
+
+    def word(self):
+        return r"[^a-zA-Z -]+"
