@@ -102,14 +102,7 @@ class Crawl:
     def find_special_data(self, web_content):
         for regex in self.user_defined_regex:
             special_data = re.findall(regex, web_content)
-            self.special_data.append([regex, special_data])
-        # data = []
-
-        # for i in range(len(self.user_defined_regex)):
-        #     special_data = re.findall(self.user_defined_regex[i], web_content)
-        #     for j in range(len(special_data)):
-        #         data.append(special_data[j])
-        #     self.special_data.append([self.user_defined_regex[i], data])
+            self.special_data.append([regex, set(special_data)])
 
     def find_most_common_words(self):
         pass
@@ -129,7 +122,7 @@ class Crawl:
                 regexes += (regex + ", ")
             text += "User-defined regexes: " + regexes + "\n"
         else:
-            text += "No user-defined regexes." + "\n"
+            text += "Oops! No user-defined regexes." + "\n"
         
         text += "\n"
         if self.crawled_links != []:
@@ -137,7 +130,7 @@ class Crawl:
             for link in self.crawled_links:
                 text += link + "\n"
         else:
-            text += "No crawled links." + "\n"
+            text += "Oops! No crawled links." + "\n"
 
         text += "\n"
         if self.emails != []:
@@ -145,7 +138,7 @@ class Crawl:
             for email in self.emails:
                 text += email + "\n"
         else:
-            text += "No emails found." + "\n"
+            text += "Oops! No emails found." + "\n"
 
         text += "\n"
         if self.phone_numbers != []:
@@ -153,7 +146,7 @@ class Crawl:
             for phone_number in self.phone_numbers:
                 text += phone_number + "\n"
         else:
-            text += "No phone numbers found." + "\n"
+            text += "Oops! No phone numbers found." + "\n"
 
         text += "\n"
         if self.comments != []:
@@ -163,7 +156,7 @@ class Crawl:
                 text += comment[2] + "\n"
                 text += "\n"
         else:
-            text += "No comments found." + "\n"
+            text += "Oops! No comments found." + "\n"
 
 
         text += "\n"
@@ -174,7 +167,8 @@ class Crawl:
                 text += special_data[0] + ":" + "\n"
                 for data in special_data[1]:
                     text += data + "\n"
-        # special data
+        else:
+            text += "Oops! No special data found."
 
         text += "\n"
         # common words
