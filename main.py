@@ -8,8 +8,8 @@ url, levels, user_defined_regex = crawley.user_input()
 
 crawl = Crawl(url, levels, user_defined_regex)
 crawl.perform_crawl()
-crawl.test_variables()
-crawl.save_to_pdf()
+#crawl.test_variables()
+crawl.save_report()
 
 while True:
     if crawley.crawl_another() == True:
@@ -17,7 +17,7 @@ while True:
         crawl = Crawl(url, levels, user_defined_regex)
         crawl.perform_crawl()
         crawl.test_variables()
-        crawl.save_to_pdf()
+        crawl.save_report()
     else:
         crawley.goodbye()
         break

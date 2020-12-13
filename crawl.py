@@ -3,8 +3,6 @@ from bs4 import BeautifulSoup
 from datetime import date
 import urllib.request
 import re
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
 
 class Crawl:
     def __init__(self, url : str, levels : int, user_defined_regex : list):
@@ -102,6 +100,9 @@ class Crawl:
         file.close()
 
     def find_special_data(self, web_content):
+        for regex in self.user_defined_regex:
+            special_data = re.findall(regex, web_content)
+            self.special_data.append([regex, special_data])
         # data = []
 
         # for i in range(len(self.user_defined_regex)):
@@ -109,75 +110,77 @@ class Crawl:
         #     for j in range(len(special_data)):
         #         data.append(special_data[j])
         #     self.special_data.append([self.user_defined_regex[i], data])
-        pass
 
     def find_most_common_words(self):
         pass
 
-    def save_to_pdf(self):
-        path = f"./reports/{re.search(Regex_patterns().pure_domain(), self.domain).group()}_{self.date}.pdf"
-        pdf = canvas.Canvas(path, pagesize=A4)
-        text = pdf.beginText()
+    def save_report(self):
+        path = f"./reports/{re.search(Regex_patterns().pure_domain(), self.domain).group()}_{self.date}.txt"
+        file = open(path, "w")
+        text = ""
 
-        width, height = A4
-        text.setTextOrigin(50, height - 50)
-
-        text.textLine("URL: " + self.url)
-        text.textLine("Date: " + self.date)
-        text.textLine("Crawled levels: " + str(self.levels))
+        text += "URL: " + self.url + "\n"
+        text += "Date: " + self.date + "\n"
+        text += "Crawled levels: " + str(self.levels) + "\n"
 
         regexes = ""
         if self.user_defined_regex != []:
             for regex in self.user_defined_regex:
                 regexes += (regex + ", ")
-            text.textLine("User-defined regexes: " + regexes)
+            text += "User-defined regexes: " + regexes + "\n"
         else:
-            text.textLine("No user-defined regexes.")
+            text += "No user-defined regexes." + "\n"
         
-        text.textLine("")
+        text += "\n"
         if self.crawled_links != []:
-            text.textLine("Crawled links:")
+            text += "Crawled links:" + "\n"
             for link in self.crawled_links:
-                text.textLine(link)
+                text += link + "\n"
         else:
-            text.textLine("No crawled links.")
+            text += "No crawled links." + "\n"
 
-        text.textLine("")
+        text += "\n"
         if self.emails != []:
-            text.textLine("Emails:")
+            text += "Emails:" + "\n"
             for email in self.emails:
-                text.textLine(email)
+                text += email + "\n"
         else:
-            text.textLine("No emails found.")
+            text += "No emails found." + "\n"
 
-        text.textLine("")
+        text += "\n"
         if self.phone_numbers != []:
-            text.textLine("Phone numbers:")
+            text += "Phone numbers:" + "\n"
             for phone_number in self.phone_numbers:
-                text.textLine(phone_number)
+                text += phone_number + "\n"
         else:
-            text.textLine("No phone numbers found.")
+            text += "No phone numbers found." + "\n"
 
-        text.textLine("")
+        text += "\n"
         if self.comments != []:
-            text.textLine("Comments:")
+            text += "Comments:" + "\n"
             for comment in self.comments:
-                text.textLine(comment[0] + " on line " + str(comment[1]) + ":")
-                text.textLine(comment[2])
-                text.textLine("")
+                text += comment[0] + " on line " + str(comment[1]) + ":" + "\n"
+                text += comment[2] + "\n"
+                text += "\n"
         else:
-            text.textLine("No comments found.")
+            text += "No comments found." + "\n"
 
 
-        text.textLine("")
+        text += "\n"
+        if self.special_data != []:
+            text += "Special data:" + "\n"
+            for special_data in self.special_data:
+                text += "\n"
+                text += special_data[0] + ":" + "\n"
+                for data in special_data[1]:
+                    text += data + "\n"
         # special data
 
-        text.textLine("")
+        text += "\n"
         # common words
 
-        pdf.drawText(text)
-        pdf.setTitle("Web Crawl Report")
-        pdf.save()
+        file.write(text)
+        file.close()
 
 
     def perform_crawl(self):
@@ -189,19 +192,19 @@ class Crawl:
 
                     if web_content != "":
                         # Find links for sub-sites
-                        #self.find_links(web_content)
+                        self.find_links(web_content)
                         
                         # Find emails
-                        #self.find_emails(web_content.get_text())
+                        self.find_emails(web_content.get_text())
                         
                         # Find phone numbers
-                        #self.find_phone_numbers(web_content.get_text())
+                        self.find_phone_numbers(web_content.get_text())
                         
                         # Find comments from the source code
-                        #self.find_comments(self.links_to_crawl[i], web_content)
+                        self.find_comments(self.links_to_crawl[i], web_content)
 
                         # Find special data
-                        #self.find_special_data(web_content.get_text())
+                        self.find_special_data(web_content.get_text())
                         
                         # Find common words
 
