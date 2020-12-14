@@ -115,8 +115,7 @@ class Crawl:
             if word in self.words:
                 self.words[word] += 1
             else:
-                self.words.update({word: 1}) 
-        pass
+                self.words.update({word: 1})
 
     def save_report(self):
         if re.search(Regex_patterns().http(), self.domain):
