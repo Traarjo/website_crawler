@@ -8,7 +8,7 @@ class Regex_patterns:
         return r"(http(s)?://)?(www.)?[a-z0-9-]+.[a-z]+"
 
     def pure_domain(self):
-        return r"(?<=\/\/)[a-z0-9-]+.[a-z]+"
+        return r"(?<=\/\/)(www.)?[a-z0-9-]+.[a-z]+"
 
     def http(self):
         return r"http(s)?://"
