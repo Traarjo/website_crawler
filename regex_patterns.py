@@ -14,7 +14,7 @@ class Regex_patterns:
         return r"http(s)?://"
 
     def email(self):
-        return r"[a-zA-Z0-9.\-_]+@[0-9a-zA-Z]+[0-9a-zA-Z.\-]+"
+        return r"[a-zA-Z0-9\.\-\_]+@[0-9a-zA-Z\.\-]+.[a-zA-Z]+"
     
     def phone_number(self):
         return r"[+(\d]{1}[\d+() ]{4,12}[\d]{1}"
