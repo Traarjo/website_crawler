@@ -1,0 +1,38 @@
+URL: https://pypi.org/project/beautifulsoup4/
+Date: 15.12.2020
+Crawled levels: 1
+Oops! No user-defined regexes.
+
+Crawled links:
+https://pypi.org/project/beautifulsoup4/
+
+Oops! No emails found.
+
+Phone numbers:
+98143716
+009509
+315431577
+022881
+507915
+171074
+1907995
+373088
+6871106
+
+Comments:
+https://pypi.org/project/beautifulsoup4/ on line 42:
+<!-- Accessibility: this link should always be the first piece of content inside the body-->
+https://pypi.org/project/beautifulsoup4/ on line 48:
+<!-- Add browser warning. Will show for ie9 and below -->
+https://pypi.org/project/beautifulsoup4/ on line 323:
+<!-- mobile menu -->
+
+Special data:
+Oops! No special data found.
+
+Most common words:
+Python: 24
+the: 16
+Jan: 16
+for: 14
+to: 12
