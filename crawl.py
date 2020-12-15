@@ -167,7 +167,6 @@ class Crawl:
             for comment in self.comments:
                 text += comment[0] + " on line " + str(comment[1]) + ":" + "\n"
                 text += comment[2] + "\n"
-                text += "\n"
         else:
             text += "Oops! No comments found." + "\n"
 
