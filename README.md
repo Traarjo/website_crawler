@@ -14,3 +14,7 @@ pip install beautifulsoup4
 
 - You have to be located inside the `website_crawler`-folder
 - Execute the file `main.py`
+
+## Author
+
+The sole author of the code is `Candidate 230`. This applies to every file.
